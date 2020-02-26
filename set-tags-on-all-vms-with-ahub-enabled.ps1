@@ -6,6 +6,7 @@
 # This tag can then be queried for in Cost Analysis to track costs of only AHUB-enabled VMs.
 # At the time of this writing, Cost Analysis does not have native feature to filter VMs by AHUB status.
 #
+# NOTE: New Tags can take ~1 day to reflect in Cost Analysis before being queryable
 #################################################
 
 # Get all VMs in current scope
@@ -18,7 +19,15 @@ ForEach ($vm in $allVms) {
     # Check if AHUB is enabled
     if(($vm.LicenseType -eq "Windows_Server") -or ($vm.LicenseType -eq "Windows_Client")) {
     
-        # Add a tag to the VM where {key="AHUB", value="enabled"}
-        Set-AzureRmResource -ResourceId $vm.id -Tag @{"AHUB"="enabled"}
+        # Retrieve all of its current tags
+        $tags = $vm.Tags
+        
+        # Append new tag
+        $tags += @{"AHUB"="enabled"}
+    
+        # Set Tags to $tags with new tag appended
+        # Force operation - no confirmation prompt
+        # Consider running cmdlet in background (no waiting for job to complete) by appending param -AsJob
+        Set-AzResource -ResourceId $vm.id -Tag $tags -Force
     }
 }
