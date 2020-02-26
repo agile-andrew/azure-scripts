@@ -26,8 +26,8 @@ ForEach ($vm in $allVms) {
         $tags += @{"AHUB"="enabled"}
     
         # Set Tags to $tags with new tag appended
-        # Force operation - no confirmation prompt
-        # Consider running cmdlet in background (no waiting for job to complete) by appending param -AsJob
-        Set-AzResource -ResourceId $vm.id -Tag $tags -Force
+            # Force operation - no confirmation prompt by appending param -Force
+            # Run cmdlet in background (no waiting for job to complete) by appending param -AsJob
+        Set-AzResource -ResourceId $vm.id -Tag $tags -Force -AsJob
     }
 }
