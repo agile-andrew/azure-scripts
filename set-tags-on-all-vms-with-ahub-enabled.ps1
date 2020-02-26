@@ -1,11 +1,11 @@
 #################################################
-filename: "set-tags-on-all-vms-with-ahub-enabled.ps1"
-author: Andrew Penn
-
-Adds a tag to all VMs in the current scope with Azure Hybrid Use Benefit (AHUB) enabled.
-This tag can then be queried for in Cost Analysis to track costs of only AHUB-enabled VMs.
-At the time of this writing, Cost Analysis does not have native feature to filter VMs by AHUB status.
-
+# filename: "set-tags-on-all-vms-with-ahub-enabled.ps1"
+# author: Andrew Penn
+#
+# Adds a tag to all VMs in the current scope with Azure Hybrid Use Benefit (AHUB) enabled.
+# This tag can then be queried for in Cost Analysis to track costs of only AHUB-enabled VMs.
+# At the time of this writing, Cost Analysis does not have native feature to filter VMs by AHUB status.
+#
 #################################################
 
 # Get all VMs in current scope
