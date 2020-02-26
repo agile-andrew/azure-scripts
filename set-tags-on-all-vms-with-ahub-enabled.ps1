@@ -1,5 +1,5 @@
 #################################################
-filename: set-tags-on-all-vms-with-ahub-enabled.ps1
+filename: "set-tags-on-all-vms-with-ahub-enabled.ps1"
 author: Andrew Penn
 
 Adds a tag to all VMs in the current scope with Azure Hybrid Use Benefit (AHUB) enabled.
