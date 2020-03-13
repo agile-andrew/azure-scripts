@@ -20,9 +20,9 @@
 
 # Azure CLI Command:
 az container create \
-	-g sftp-on-azure-rg \
-	-n sftp-group \
-	--location westus2 \
+	-g resourceGroupName \
+	-n aciContainerGroupName \
+	--location locationOfContainerGroupAsDefinedInPortal \
 	--image atmoz/sftp:latest \
 	--restart-policy OnFailure \
 	--cpu 2 \
@@ -31,9 +31,9 @@ az container create \
 	--ip-address Public \
 	--protocol TCP \
 	--ports 22 \
-	--azure-file-volume-account-key RwxneUadJBDF5DqlzCxbkINoInjqS2IHhZVdqdCkFQyKtlBuVfuRcoi2lo/RPwHeHWweZhAxT9CUSWAa444NhQ== \
-	--azure-file-volume-account-name sftpstgjwuq7fvvcoqko \
-	--azure-file-volume-mount-path /home/anpenn/upload \
-	--azure-file-volume-share-name sftpfileshare \
-	--environment-variables 'SFTP_USERS'='anpenn:Billgates01!:1001' \
+	--azure-file-volume-account-key keyToStorageAccountThatHousesFileshare \
+	--azure-file-volume-account-name nameOfStorageAccountThatHousesFileshare \
+	--azure-file-volume-mount-path /home/yourSFTPUsername/upload \
+	--azure-file-volume-share-name nameOfFileshareInStorageAccount \
+	--environment-variables 'SFTP_USERS'='sftpUsername:sftpPassword:uniqueNumber' \
 	--dns-name-label mynewdnslabel
