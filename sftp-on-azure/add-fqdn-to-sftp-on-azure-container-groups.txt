@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # DISCLAIMER:
 # THIS CODE-SAMPLE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, 
 # INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -13,43 +11,29 @@
 # been advised of the possibility of such damages, rising out of the use of or inability to use the sample script, even if Microsoft
 # has been advised of the possibility of such damages.
 
-# DEFINE CURRENT CONFIGURATION OF CONTAINER GROUP AS VARS
-RESOURCEGRP="sftp-on-azure-rg"
-ACICONTAINERGROUPNAME="sftp-group"
-LOCATION="westus2"
-IMAGE="atmoz/sftp:lastest"
-RESTARTPOLICY="OnFailure"
-CPU="2"
-MEMORY="1"
-OSTYPE="Linux"
-IPADDR="Public"
-PROTOCOL="TCP"
-PORTS="22"
-AZSTORAGEACCNAME="sftpstgjwuq7fvvcoqko"
-AZSTORAGEACCKEY="RwxneUadJBDF5DqlzCxbkINoInjqS2IHhZVdqdCkFQyKtlBuVfuRcoi2lo/RPwHeHWweZhAxT9CUSWAa444NhQ=="
-AZFILESHARENAME="sftpfileshare"
-VOLUMEMOUNTPATHONCONTAINER="/home/anpenn/upload"
-ENVVARS="'SFTP_USERS'='anpenn:Billgates01!:1001'"
+# Every parameter in the following command can be found in the deployment templates of the current container group except for
+# the azure-file-volume-account-key. You will need to look up and copy the storage account key of the storage account name that
+# houses your fileshare
 
-# DEFINE NEW DNS LABEL TO ADD/UPDATE
-NEWDNSNAMELABEL="mynewdnslabel"
+# Environment variables is a 'key'='value' pair of 'SFTP_USERS'='<sftpUserName>:<sftpPassword>:<uniqueNum>'. This string can be
+# found in the original deployment template of the current container group as well.
 
-# AZURE CLI COMMAND
+# Azure CLI Command:
 az container create \
-	-g $RESOURCEGRP \
-	-n $ACICONTAINERGROUPNAME \
-	--location $LOCATION \
-	--image $IMAGE \
-	--restart-policy $RESTARTPOLICY \
-	--cpu $CPU \
-	--memory $MEMORY \
-	--os-type $OSTYPE \
-	--ip-address $IPADDR \
-	--protocol $PROTOCOL \
-	--ports $PORTS \
-  --azure-file-volume-account-name $AZSTORAGEACCNAME \
-	--azure-file-volume-account-key $AZSTORAGEACCKEY \
-	--azure-file-volume-share-name $AZFILESHARENAME \
-	--azure-file-volume-mount-path $VOLUMEMOUNTPATHONCONTAINER \
-	--environment-variables $ENVVARS \
-	--dns-name-label $NEWDNSNAMELABEL
+	-g sftp-on-azure-rg \
+	-n sftp-group \
+	--location westus2 \
+	--image atmoz/sftp:latest \
+	--restart-policy OnFailure \
+	--cpu 2 \
+	--memory 1 \
+	--os-type Linux \
+	--ip-address Public \
+	--protocol TCP \
+	--ports 22 \
+	--azure-file-volume-account-key RwxneUadJBDF5DqlzCxbkINoInjqS2IHhZVdqdCkFQyKtlBuVfuRcoi2lo/RPwHeHWweZhAxT9CUSWAa444NhQ== \
+	--azure-file-volume-account-name sftpstgjwuq7fvvcoqko \
+	--azure-file-volume-mount-path /home/anpenn/upload \
+	--azure-file-volume-share-name sftpfileshare \
+	--environment-variables 'SFTP_USERS'='anpenn:Billgates01!:1001' \
+	--dns-name-label mynewdnslabel
