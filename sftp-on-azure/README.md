@@ -1,5 +1,6 @@
-# SFTP on Azure
+# README: SFTP On Azure FQDN Update DNS NAME LABEL
 ## This script is about the SFTP on Azure deployment template using ACI located here: https://github.com/Azure-Samples/sftp-creation-template
+## This a README, the script can be found as another file in this repo
 
 ### Problem
 ACI does not have support for static IPs at the time of this writing. When an Azure container group is terminated,
